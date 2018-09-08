@@ -8,7 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+// TODO lage egen maske for EditText?
 import com.szagurskii.patternedtextwatcher.PatternedTextWatcher;
 
 import org.jsoup.Jsoup;
@@ -27,42 +27,56 @@ public class MainActivity extends AppCompatActivity {
     private final String URL = "https://www.vegvesen.no/kjoretoy/Kjop+og+salg/Kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer=";
     private TextView result;
     private EditText skiltInput;
+    // Brukt for å teste automatisk sjekk av innlogget bruker
+    private boolean loggedIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        result = findViewById(R.id.result);
-
-        skiltInput = findViewById(R.id.editText);
-        // TODO fikse formatering til (Char Char)" "(#####)
-        skiltInput.addTextChangedListener(new PatternedTextWatcher("## #####"));
-
-        Button getBtn = findViewById(R.id.getBtn);
-        getBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // "Fjerner" tastaturet når brukeren trykker søk
-                skiltInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
-
-                // TODO rydde opp i håndteringen og formatteringen av skiltnr
-                skilt = skiltInput.getText().toString().toLowerCase().replace(' ', '+');
-
-                if(sjekkInput(skilt)) {
-                    finnBil(skilt);
-                } else {
-                    skiltInput.setError("Skriv skiltnr");
+        // Er dette for smidig til å være sant?
+        if(loggedIn) {
+            setContentView(R.layout.test);
+            Button logout = findViewById(R.id.loggUt);
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setContentView(R.layout.activity_main);
                 }
-            }
-        });
+            });
+        } else {
+            setContentView(R.layout.activity_main);
+
+            result = findViewById(R.id.result);
+
+            skiltInput = findViewById(R.id.editText);
+            // TODO fikse formatering til (Char Char)" "(#####)
+            skiltInput.addTextChangedListener(new PatternedTextWatcher("## #####"));
+
+            Button getBtn = findViewById(R.id.getBtn);
+            getBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // "Fjerner" tastaturet når brukeren trykker søk
+                    skiltInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
+                    // TODO rydde opp i håndteringen og formatteringen av skiltnr
+                    skilt = skiltInput.getText().toString().toLowerCase().replace(' ', '+');
+
+                    if (sjekkInput(skilt)) {
+                        finnBil(skilt);
+                    } else {
+                        skiltInput.setError("Skriv skiltnr");
+                    }
+                }
+            });
+        }
     }
 
     // TODO mer robust sjekk
     private boolean sjekkInput(String s) {
         return !(s.equals(""));
     }
-
+    // Må pr dags dato kjøres fra en activity
     private void finnBil(final String s) {
         new Thread(new Runnable() {
             @Override
