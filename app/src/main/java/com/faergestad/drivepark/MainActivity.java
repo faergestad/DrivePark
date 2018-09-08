@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
 
                 try {
-                    //Document doc = Jsoup.connect("https://www.vegvesen.no/kjoretoy/Kjop+og+salg/Kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer=rl+19773").get();
                     Document doc = Jsoup.connect(URL + s).get();
 
                     Elements links = doc.select("dl[class=definisjonsliste]");
