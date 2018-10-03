@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Er dette for smidig til å være sant?
+        // Dette må gjøres mer robust
         if(loggedIn) {
             setContentView(R.layout.test);
             Button logout = findViewById(R.id.loggUt);
