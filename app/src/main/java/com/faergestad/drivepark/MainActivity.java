@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 // TODO lage egen maske for EditText?
+import com.faergestad.drivepark.Model.Taxi;
 import com.szagurskii.patternedtextwatcher.PatternedTextWatcher;
 
 import org.jsoup.Jsoup;
@@ -27,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private final String URL = "https://www.vegvesen.no/kjoretoy/Kjop+og+salg/Kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer=";
     private TextView result;
     private EditText skiltInput;
-    // Brukt for å teste automatisk sjekk av innlogget bruker
-    private boolean loggedIn = true;
+    // Brukt for å teste automatisk sjekk av innlogget bruker. VIRKER IKKE. FIKS!
+    private boolean loggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Er dette for smidig til å være sant?
+        // Er dette for smidig til å være sant? JA.... Desverre
         if(loggedIn) {
             setContentView(R.layout.test);
             Button logout = findViewById(R.id.loggUt);
